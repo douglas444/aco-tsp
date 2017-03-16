@@ -195,7 +195,7 @@ void solucaoMultipla(int *rota, int qtdCidades, double **distancias, Parametros 
     }
 
     cont = 0;
-    for(i = 0; i < qtdCidades; ++i)
+    for(i = 0; i < n; ++i)
     {
         if(valores[i] == menorCusto)
         {
@@ -215,7 +215,7 @@ void solucaoMultipla(int *rota, int qtdCidades, double **distancias, Parametros 
     calculaEst(valores, n, &media, &variancia);
     printf("Estatisticas das %d solucoes:\n", n);
     printf(" - Media: %f\n", media);
-    printf(" - Desvio padrão: %f\n\n", sqrt(variancia));
+    printf(" - Desvio padrao: %f\n\n", sqrt(variancia));
 
     free(caminhoMenorCusto);
     free(valores);
