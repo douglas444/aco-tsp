@@ -21,6 +21,7 @@ void criaInstanciaTSP(double ***distancias, int *qtdCidades, int **rota, int *po
         int popAutomatica, char *nomeArquivo);
 void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades);
 void mostraDistancias(double **distancias, int qtdCidades);
+void pause();
 
 int main()
 {
@@ -44,23 +45,23 @@ int main()
             switch(opcao)
             {
             case 0:
-                system("cls");
+                system("clear");
                 carregaInstanciaTSP(&distancias, &qtdCidades, &rota,
                         &p.populacao, popAutomatica, nomeArquivo);
                 break;
             case 1:
-                system("cls");
+                system("clear");
                 criaInstanciaTSP(&distancias, &qtdCidades, &rota,
                         &p.populacao, popAutomatica, nomeArquivo);
                 break;
             case 2:
-                system("cls");
+                system("clear");
                 break;
             default:
-                system("cls");
+                system("clear");
                 printf("Opcao invalida!");
-                system("pause");
-                system("cls");
+                pause();
+                system("clear");
                 break;
             }
 
@@ -68,7 +69,7 @@ int main()
         while(opcao != 0 && opcao != 1 && opcao != 2);
 
         inicializaVariaveis(&p, &popAutomatica, qtdCidades);
-        system("cls");
+        system("clear");
 
         if(opcao != 2)
         {
@@ -93,24 +94,24 @@ int main()
                 switch(opcao)
                 {
                 case 0:
-                    system("cls");
+                    system("clear");
                     solucaoPadrao(rota, qtdCidades, distancias, p);
-                    system("cls");
+                    system("clear");
                     break;
                 case 1:
-                    system("cls");
+                    system("clear");
                     solucaoMultipla(rota, qtdCidades, distancias, p);
-                    system("cls");
+                    system("clear");
                     break;
                 case 2:
-                    system("cls");
+                    system("clear");
                     configuraParametros(&p, &popAutomatica, qtdCidades);
-                    system("cls");
+                    system("clear");
                     break;
                 case 3:
-                    system("cls");
+                    system("clear");
                     mostraDistancias(distancias, qtdCidades);
-                    system("cls");
+                    system("clear");
                     break;
                 case 4:
                     free(rota);
@@ -118,13 +119,13 @@ int main()
                     {
                         free(distancias[i]);
                     }
-                    system("cls");
+                    system("clear");
                     break;
                 default:
-                    system("cls");
+                    system("clear");
                     printf("Opcao invalida!");
-                    system("pause");
-                    system("cls");
+                    pause();
+                    system("clear");
                     break;
                 }
             }
@@ -151,7 +152,7 @@ void solucaoPadrao(int *rota, int qtdCidades, double **distancias, Parametros p)
     for(i = 0; i < qtdCidades; ++i)
         printf(" - [%d] \n", rota[i]);
     printf("\n");
-    system("pause");
+    pause();
 }
 void solucaoMultipla(int *rota, int qtdCidades, double **distancias, Parametros p)
 {
@@ -219,7 +220,7 @@ void solucaoMultipla(int *rota, int qtdCidades, double **distancias, Parametros 
     free(caminhoMenorCusto);
     free(valores);
 
-    system("pause");
+    pause();
 }
 
 void calculaEst(double *valores, int n, double *media, double *variancia){
@@ -397,7 +398,7 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
         printf("  7 - Voltar ao menu principal;\n");
         printf("\nOpcao escolhida: ");
         scanf("%d", &opcao);
-        system("cls");
+        system("clear");
 
         switch(opcao)
         {
@@ -437,42 +438,42 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
                 switch(opcao)
                 {
                 case 0:
-                    system("cls");
+                    system("clear");
                     printf("Informe o valor: ");
                     scanf("%d", &p->populacao);
                     *popAutomatica = 0;
                     printf("\n");
                     break;
                 case 1:
-                    system("cls");
+                    system("clear");
                     printf("    - Populacao definida de acordo com numero de vertices do grafo atual.\n\n");
                     p->populacao = qtdCidades;
                     *popAutomatica = 1;
-                    system("pause");
+                    pause();
                     break;
                 default:
                     printf("\nOpcao invalida!\n\n");
-                    system("pause");
+                    pause();
                     break;
                 }
             }
             while(opcao != 0 && opcao != 1);
-            system("cls");
+            system("clear");
             break;
         case 6:
             inicializaVariaveis(p, popAutomatica, qtdCidades);
             printf("Valores restaurados!\n\n");
-            system("pause");
+            pause();
             break;
         case 7:
             break;
         default:
             printf("\nOpcao invalida!\n\n");
-            system("pause");
+            pause();
             break;
         }
 
-        system("cls");
+        system("clear");
 
     }while(opcao != 7);
 }
@@ -487,5 +488,13 @@ void mostraDistancias(double **distancias, int qtdCidades){
             printf("[%d][%d] = %.2lf\n", i, j, distancias[i][j]);
         }
     }
-    system("pause");
+    pause();
+}
+
+void pause() {
+
+    printf("\nPressione enter para continuar");
+    setbuf(stdin, NULL);
+    getchar();
+
 }
