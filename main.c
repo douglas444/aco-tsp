@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 #include "antSystem.h"
+#include "tspReader.h"
 
 static double const BETA = 5;
 static double const ALPHA = 1;
@@ -37,8 +38,7 @@ int main()
             printf("------------ TSP usando o Ant System ------------\n\n");
             printf("Opcoes disponiveis:\n\n");
             printf("  0 - Carregar arquivo de instancia;\n");
-            printf("  1 - Criar novo arquivo de instancia;\n");
-            printf("  2 - Encerrar programa;\n\n");
+            printf("  1 - Encerrar programa;\n\n");
             printf("Opcao escolhida: ");
             scanf("%d", &opcao);
 
@@ -51,11 +51,6 @@ int main()
                 break;
             case 1:
                 system("clear");
-                criaInstanciaTSP(&distancias, &qtdCidades, &rota,
-                        &p.populacao, popAutomatica, nomeArquivo);
-                break;
-            case 2:
-                system("clear");
                 break;
             default:
                 system("clear");
@@ -66,12 +61,12 @@ int main()
             }
 
         }
-        while(opcao != 0 && opcao != 1 && opcao != 2);
+        while(opcao != 0 && opcao != 1);
 
         inicializaVariaveis(&p, &popAutomatica, qtdCidades);
         system("clear");
 
-        if(opcao != 2)
+        if(opcao != 1)
         {
             do
             {
@@ -133,7 +128,7 @@ int main()
             while(opcao != 4);
         }
     }
-    while(opcao != 2);
+    while(opcao != 1);
 
     return 0;
 }
@@ -267,108 +262,17 @@ void exibeParametros(Parametros p, int popAutomatica){
 void carregaInstanciaTSP(double ***distancias, int *qtdCidades, int **rota,
         int *populacao, int popAutomatica, char *nomeArquivo)
 {
-    int i, j;
     FILE *f;
+    TspInfo *tspInfo;
 
     printf("Informe o nome do arquivo (max 100 caracteres): ");
     scanf("%s", nomeArquivo);
     f = fopen(nomeArquivo, "r");
-
-    if(f == NULL)
-    {
-        exit(1);
-    }
-
-    fscanf(f, "%d\n", qtdCidades);
-
-    *distancias = (double**) malloc((*qtdCidades) * sizeof(double*));
-    if(*distancias == NULL)
-    {
-        exit(1);
-    }
-
-    for(i = 0; i < *qtdCidades; ++i)
-    {
-        (*distancias)[i] = (double*) malloc((*qtdCidades) * sizeof(double));
-        if((*distancias)[i] == NULL)
-        {
-            exit(1);
-        }
-    }
-
-
-    for(i = 0; i < *qtdCidades - 1; ++i)
-    {
-        for(j = i + 1; j < *qtdCidades; ++j)
-        {
-            fscanf(f, "%lf\n", &(*distancias)[i][j]);
-            (*distancias)[j][i] = (*distancias)[i][j];
-        }
-    }
-
+    tspInfo = read(f);
     fclose(f);
 
-    if(popAutomatica == 1)
-        *populacao = *qtdCidades;
-
-    *rota = (int*) malloc(sizeof(int) * (*qtdCidades));
-    if(*rota == NULL)
-    {
-        exit(1);
-    }
-}
-
-void criaInstanciaTSP(double ***distancias, int *qtdCidades, int **rota,
-        int *populacao, int popAutomatica, char *nomeArquivo)
-{
-    int i, j;
-    FILE *f;
-
-    printf("Informe o nome do arquivo a ser criado (max 100 caracteres): ");
-    scanf("%s", nomeArquivo);
-    printf("Informe o numero de cidades: ");
-    scanf("%d", qtdCidades);
-
-    printf("\n");
-
-    f = fopen(nomeArquivo, "w");
-    if(f == NULL)
-    {
-        exit(1);
-    }
-
-    fprintf(f, "%d\n", *qtdCidades);
-
-    *distancias = (double**) malloc((*qtdCidades) * sizeof(double*));
-    if(*distancias == NULL)
-    {
-        exit(1);
-    }
-
-    for(i = 0; i < *qtdCidades; ++i)
-    {
-        (*distancias)[i] = (double*) malloc((*qtdCidades) * sizeof(double));
-        if((*distancias)[i] == NULL)
-        {
-            exit(1);
-        }
-    }
-
-
-    for(i = 0; i < *qtdCidades - 1; ++i)
-    {
-        for(j = i + 1; j < *qtdCidades; ++j)
-        {
-            printf("Informe o peso da aresta [%d][%d]: ", i, j);
-            scanf("%lf", &(*distancias)[i][j]);
-            (*distancias)[j][i] = (*distancias)[i][j];
-
-            fprintf(f, "%lf\n", (*distancias)[i][j]);
-
-        }
-    }
-
-    fclose(f);
+    *distancias = tspInfo->distances;
+    *qtdCidades = tspInfo->dimension;
 
     if(popAutomatica == 1)
         *populacao = *qtdCidades;
