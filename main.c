@@ -45,18 +45,18 @@ int main()
             switch(opcao)
             {
             case 0:
-                system("clear");
+                system("tput reset");
                 carregaInstanciaTSP(&distancias, &qtdCidades, &rota,
                         &p.populacao, popAutomatica, nomeArquivo);
                 break;
             case 1:
-                system("clear");
+                system("tput reset");
                 break;
             default:
-                system("clear");
+                system("tput reset");
                 printf("Opcao invalida!");
                 pause();
-                system("clear");
+                system("tput reset");
                 break;
             }
 
@@ -64,7 +64,7 @@ int main()
         while(opcao != 0 && opcao != 1);
 
         inicializaVariaveis(&p, &popAutomatica, qtdCidades);
-        system("clear");
+        system("tput reset");
 
         if(opcao != 1)
         {
@@ -89,24 +89,24 @@ int main()
                 switch(opcao)
                 {
                 case 0:
-                    system("clear");
+                    system("tput reset");
                     solucaoPadrao(rota, qtdCidades, distancias, p);
-                    system("clear");
+                    system("tput reset");
                     break;
                 case 1:
-                    system("clear");
+                    system("tput reset");
                     solucaoMultipla(rota, qtdCidades, distancias, p);
-                    system("clear");
+                    system("tput reset");
                     break;
                 case 2:
-                    system("clear");
+                    system("tput reset");
                     configuraParametros(&p, &popAutomatica, qtdCidades);
-                    system("clear");
+                    system("tput reset");
                     break;
                 case 3:
-                    system("clear");
+                    system("tput reset");
                     mostraDistancias(distancias, qtdCidades);
-                    system("clear");
+                    system("tput reset");
                     break;
                 case 4:
                     free(rota);
@@ -114,13 +114,13 @@ int main()
                     {
                         free(distancias[i]);
                     }
-                    system("clear");
+                    system("tput reset");
                     break;
                 default:
-                    system("clear");
+                    system("tput reset");
                     printf("Opcao invalida!");
                     pause();
-                    system("clear");
+                    system("tput reset");
                     break;
                 }
             }
@@ -302,7 +302,7 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
         printf("  7 - Voltar ao menu principal;\n");
         printf("\nOpcao escolhida: ");
         scanf("%d", &opcao);
-        system("clear");
+        system("tput reset");
 
         switch(opcao)
         {
@@ -342,14 +342,14 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
                 switch(opcao)
                 {
                 case 0:
-                    system("clear");
+                    system("tput reset");
                     printf("Informe o valor: ");
                     scanf("%d", &p->populacao);
                     *popAutomatica = 0;
                     printf("\n");
                     break;
                 case 1:
-                    system("clear");
+                    system("tput reset");
                     printf("    - Populacao definida de acordo com numero de vertices do grafo atual.\n\n");
                     p->populacao = qtdCidades;
                     *popAutomatica = 1;
@@ -362,7 +362,7 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
                 }
             }
             while(opcao != 0 && opcao != 1);
-            system("clear");
+            system("tput reset");
             break;
         case 6:
             inicializaVariaveis(p, popAutomatica, qtdCidades);
@@ -377,7 +377,7 @@ void configuraParametros(Parametros *p, int *popAutomatica, int qtdCidades){
             break;
         }
 
-        system("clear");
+        system("tput reset");
 
     }while(opcao != 7);
 }
