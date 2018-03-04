@@ -170,6 +170,8 @@ void constroiRota(Parametros p, int qtdCidades, double **distancias,
         foiVisitada[rota[i]] = 1;
     }
 
+    *custo += distancias[rota[0]][rota[qtdCidades - 1]];
+
     free(foiVisitada);
     free(candidatas);
 }
